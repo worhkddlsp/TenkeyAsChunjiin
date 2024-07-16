@@ -1,6 +1,11 @@
 # TenkeyAsChunjiin
 Tenkey 를 활용하여 한손으로 천지인 형식으로 한글을 입력할수있게 해주는 어플리케이션입니다.
 
+## 실행파일빌드
+```shell
+pyInstaller -F -w TenkeyAsChunjiin.py
+```
+
 ## 실행법
  - dist/TenkeyAsChunjiin.exe 실행
 

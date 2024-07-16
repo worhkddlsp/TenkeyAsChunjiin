@@ -91,6 +91,7 @@ class Chunjiin_Controller :
             if keyCode.char in [',', '.', '\'', '"', ':', '-']:
                 self.reset()
             if keyCode.vk == 110:
+                self.__call_numpad_press_listener(keyCode.vk)
                 Chunjiin_Util.exe_press_and_release(' ')
 
 
@@ -106,6 +107,9 @@ class Chunjiin_Controller :
 
         if keyCode.vk in tenkey_num_code_list:
             self.__call_numpad_release_listener(keyCode.vk)
+        else:
+            if keyCode.vk == 110:
+                self.__call_numpad_release_listener(keyCode.vk)
 
     def __reset_current_hangel(self):
         self.before_han = Hangle(clone=self.current_han)

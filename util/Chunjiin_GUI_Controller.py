@@ -57,6 +57,7 @@ class Chunjiin_GUI_Controller:
         self.label2 = tkinter.Label(self.numpad_frame, text='2\nㅅㅎ', width=7, height=2, relief='solid', borderwidth=1)
         self.label3 = tkinter.Label(self.numpad_frame, text='3\nㅈㅊ', width=7, height=2, relief='solid', borderwidth=1)
         self.label0 = tkinter.Label(self.numpad_frame, text='0\nㅇㅁ', width=7, height=2, relief='solid', borderwidth=1)
+        self.label_period = tkinter.Label(self.numpad_frame, text='.\nspace', width=7, height=2, relief='solid', borderwidth=1)
 
         self.numpad_frame.place(x=30,y=100,anchor='nw')
         self.label7.grid(row=0, column=0, padx=1, pady=1)
@@ -69,6 +70,7 @@ class Chunjiin_GUI_Controller:
         self.label2.grid(row=2, column=1, padx=1, pady=1)
         self.label3.grid(row=2, column=2, padx=1, pady=1)
         self.label0.grid(row=3, column=1, padx=1, pady=1)
+        self.label_period.grid(row=3, column=2, padx=1, pady=1)
 
         #self.test_btn = tkinter.Button(self.root, text='test_bnt', command= self.test)
         #self.test_btn.grid(row=0, column=1)
@@ -132,6 +134,8 @@ class Chunjiin_GUI_Controller:
             self.label8.config(bg="gray")
         elif vk_code == 105:
             self.label9.config(bg="gray")
+        elif vk_code == 110:
+            self.label_period.config(bg="gray")
 
     def numpad_release_listener(self, vk_code):
         if vk_code == 96:
@@ -154,6 +158,8 @@ class Chunjiin_GUI_Controller:
             self.label8.config(bg="SystemButtonFace")
         elif vk_code == 105:
             self.label9.config(bg="SystemButtonFace")
+        elif vk_code == 110:
+            self.label_period.config(bg="SystemButtonFace")
 
     def test(self):
         Chunjiin_Util.exe_press_and_release('ㄴ')
