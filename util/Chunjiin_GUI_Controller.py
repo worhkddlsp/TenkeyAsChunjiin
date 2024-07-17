@@ -77,9 +77,10 @@ class Chunjiin_GUI_Controller:
 
     def __init_chunjiin_controller(self):
         self.chunjiin_controller = Chunjiin_Controller(
-            numpad_press_listener = self.numpad_press_listener
-            , numpad_release_listener = self.numpad_release_listener
-            , hangle_listener = self.hangle_listener
+            numpad_press_callback = self.numpad_press_callback
+            , numpad_release_callback = self.numpad_release_callback
+            , hangle_callback = self.hangle_callback
+            , on_off_callback= self.on_off_callback
             )
 
     def run(self):
@@ -102,7 +103,10 @@ class Chunjiin_GUI_Controller:
         self.chunjiin_on_off_btn.config(text='OFF', bg='SystemButtonFace')
         self.chunjiin_controller.stop()
 
-    def hangle_listener(self, before_han, current_han):
+    def on_off_callback(self):
+        self.on_click_chunjiin_on_off_btn()
+
+    def hangle_callback(self, before_han, current_han):
         if before_han == '':
             self.before_han_label.config(text='[ ]')
         else:
@@ -113,7 +117,7 @@ class Chunjiin_GUI_Controller:
         else :
             self.current_han_label.config(text=f'[{current_han}]')
 
-    def numpad_press_listener(self, vk_code):
+    def numpad_press_callback(self, vk_code):
         if vk_code == 96:
             self.label0.config(bg="gray")
         elif vk_code == 97:
@@ -137,7 +141,7 @@ class Chunjiin_GUI_Controller:
         elif vk_code == 110:
             self.label_period.config(bg="gray")
 
-    def numpad_release_listener(self, vk_code):
+    def numpad_release_callback(self, vk_code):
         if vk_code == 96:
             self.label0.config(bg="SystemButtonFace")
         elif vk_code == 97:

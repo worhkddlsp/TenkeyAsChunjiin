@@ -8,15 +8,26 @@ class Chunjiin_Controller :
     CONST_SERIAL_CHECK_TIME = 0.7
 
     def __init__(self
-                 , numpad_press_listener = None
-                 , numpad_release_listener = None
-                 , hangle_listener = None):
-        self.numpad_press_listener = numpad_press_listener
-        self.numpad_release_listener = numpad_release_listener
-        self.hangle_listener = hangle_listener
+                 , numpad_press_callback = None
+                 , numpad_release_callback = None
+                 , hangle_callback = None
+                 , on_off_callback = None):
+        self.numpad_press_callback = numpad_press_callback
+        self.numpad_release_callback = numpad_release_callback
+        self.hangle_callback = hangle_callback
+        self.on_off_callback = on_off_callback
 
         self.__init_param()
         self.listener = None
+
+        if self.on_off_callback != None :
+            self.on_off_listener = pynput.keyboard.Listener(
+                on_press=self.__on_off_press
+                , win32_event_filter=self.__on_off_event_filter
+                , suppress=False
+            )
+            self.on_off_listener.start()
+        
 
     def __init_param(self):
         self.before_han = Hangle()
@@ -62,14 +73,31 @@ class Chunjiin_Controller :
         else:
             self.listener._suppress = False
         return True
+    
+    def __on_off_event_filter(self,msg, data):
+        if data.vkCode == pynput.keyboard.Key.page_down.value.vk:
+            self.on_off_listener._suppress = True
+        else:
+            self.on_off_listener._suppress = False
+        return True
 
     def __call_numpad_press_listener(self,vk_code):
-        if self.numpad_press_listener != None :
-            self.numpad_press_listener(vk_code)
+        if self.numpad_press_callback != None :
+            self.numpad_press_callback(vk_code)
 
     def __call_hangle_listener(self):
-        if self.hangle_listener != None :
-            self.hangle_listener(self.before_han.get_word(), self.current_han.get_word())
+        if self.hangle_callback != None :
+            self.hangle_callback(self.before_han.get_word(), self.current_han.get_word())
+
+    def __call_on_off_listener(self):
+        if self.on_off_callback != None :
+            print('call Chunjiin_Controller On/Off')
+            self.on_off_callback()
+
+    def __on_off_press(self, key):
+        if isinstance(key, pynput.keyboard.Key):
+            if key == pynput.keyboard.Key.page_down :
+                self.__call_on_off_listener()
 
     def __on_press(self, key):
         keyCode = None
@@ -96,8 +124,8 @@ class Chunjiin_Controller :
 
 
     def __call_numpad_release_listener(self, vk_code):
-        if self.numpad_release_listener != None :
-            self.numpad_release_listener(vk_code)
+        if self.numpad_release_callback != None :
+            self.numpad_release_callback(vk_code)
 
     def __on_release(self, key):
         keyCode = None
