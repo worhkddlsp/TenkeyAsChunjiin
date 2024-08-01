@@ -291,10 +291,6 @@ class Hangle:
             self.set_jong('ㅀ')
             self.step = Hangle.EXIST_DOUBLE_JONG
             return True
-        elif self.get_jong() == 'ㄹ' and word == 'ㅎ':
-            self.set_jong('ㅀ')
-            self.step = Hangle.EXIST_DOUBLE_JONG
-            return True
         elif self.get_jong() == 'ㄹ' and word == 'ㅂ':
             self.set_jong('ㄼ')
             self.step = Hangle.EXIST_DOUBLE_JONG

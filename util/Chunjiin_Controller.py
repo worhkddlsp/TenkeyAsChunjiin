@@ -279,11 +279,15 @@ class Chunjiin_Controller :
             chunjiin_word = tenkey_num_code_dict[vk_code]['cji'][before_chunjiin_word_idx+1]
 
             Chunjiin_Util.exe_backspace(1)
-            self.__reset_current_hangel()
-            self.current_han.set_cho(chunjiin_word)
+            if self.current_han.check_and_set_double_jong(chunjiin_word) :
+                Chunjiin_Util.exe_press_and_release(self.current_han.get_word())
+            else :
+                self.__reset_current_hangel()
+                self.current_han.set_cho(chunjiin_word)
+                Chunjiin_Util.exe_press_and_release(self.before_han.get_word())
+                Chunjiin_Util.exe_press_and_release(self.current_han.get_word())
+
             self.__call_hangle_listener()
-            Chunjiin_Util.exe_press_and_release(self.before_han.get_word())
-            Chunjiin_Util.exe_press_and_release(self.current_han.get_word())
         else:
             print(f'__process_jaum_double_tap - 예상못한 케이스!!!!!!!')
 
